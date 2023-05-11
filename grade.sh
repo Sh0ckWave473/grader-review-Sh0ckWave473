@@ -1,4 +1,4 @@
-CPATH='".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar"'
+CPATH='.;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar'
 
 rm -rf student-submission
 rm -rf grading-area
@@ -27,10 +27,17 @@ if [[ -f $file ]]
         exit
 fi
 cd grading-area/
-javac -cp $CPATH TestListExamples.java 2> compiler-err.txt
+javac -cp $CPATH *.java
 if [[ $? != 0 ]]
     then
         echo The file did not compile correctly. Please make sure there are no errors in your code
         exit
 fi
-# java -cp $CPATH org.junit.runner.JUnitCore TestListExamples
+java -cp $CPATH org.junit.runner.JUnitCore TestListExamples > results.txt
+result=`grep "OK (1 test)" results.txt`
+if [[ $result==*"OK"* ]]
+    then
+        echo right
+    else
+        echo wrong
+fi
