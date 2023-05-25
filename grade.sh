@@ -34,10 +34,11 @@ if [[ $? != 0 ]]
         exit
 fi
 java -cp $CPATH org.junit.runner.JUnitCore TestListExamples > results.txt
-result=`grep "OK (1 test)" results.txt`
-if [[ $result==*"OK"* ]]
+result=`grep -i "FAIL" results.txt`
+if [[ $result == *"FAILURES"* ]]
     then
-        echo right
+        echo There seems to be an error in your code...
+        cat results.txt
     else
-        echo wrong
+        echo Your code has ran successfully and passed all tests "(2/2)"
 fi
